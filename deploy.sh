@@ -26,7 +26,14 @@ cd ..
 # Restart the backend server (e.g., Node.js app using pm2)
 echo "Restarting backend server..."
 cd /home/ubuntu/fullstack-app/server
-pm2 stop app_name || pm2 start app.js --name "app_name"
+
+# Make sure that the app.js exists in the server folder.
+if [ -f "app.js" ]; then
+  pm2 stop app_name || pm2 start app.js --name "backend"
+else
+  echo "Error: app.js not found in /home/ubuntu/fullstack-app/server/"
+  exit 1
+fi
 
 # If using Docker instead of pm2, restart the containers (optional)
 # echo "Restarting Docker containers..."
