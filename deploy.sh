@@ -11,6 +11,13 @@ git pull origin master
 # Install dependencies for backend (inside the server directory)
 echo "Installing backend dependencies..."
 cd /home/ubuntu/fullstack-app/server
+
+# Validate package.json for backend
+if [ ! -f "package.json" ]; then
+  echo "Error: package.json not found in /home/ubuntu/fullstack-app/server/"
+  exit 1
+fi
+
 npm install --production
 
 # Install dependencies for frontend (inside the client directory)
@@ -27,9 +34,9 @@ cd ..
 echo "Restarting backend server..."
 cd /home/ubuntu/fullstack-app/server
 
-# Make sure that the app.js exists in the server folder.
+# Make sure the backend entry file exists (it might be app.js or another entry file)
 if [ -f "app.js" ]; then
-  pm2 stop app_name || pm2 start app.js --name "backend"
+  pm2 stop backend || pm2 start /home/ubuntu/fullstack-app/client/src/app.js --name "frontend"
 else
   echo "Error: app.js not found in /home/ubuntu/fullstack-app/server/"
   exit 1
