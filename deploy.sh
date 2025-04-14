@@ -34,9 +34,9 @@ cd ..
 echo "Restarting backend server..."
 cd /home/ubuntu/fullstack-app/server
 
-# Make sure the backend entry file exists (it might be app.js or another entry file)
+# Make sure the backend entry file exists (it should be app.js in the server directory)
 if [ -f "app.js" ]; then
-  pm2 stop backend || pm2 start /home/ubuntu/fullstack-app/client/src/app.js --name "frontend"
+  pm2 stop backend || pm2 start app.js --name "backend"
 else
   echo "Error: app.js not found in /home/ubuntu/fullstack-app/server/"
   exit 1
