@@ -4,23 +4,33 @@
 echo "Setting up the environment..."
 export NODE_ENV=production
 
-# Pull the latest changes (if you have a Git repo on your EC2 instance)
+# Pull the latest changes from Git
 echo "Pulling the latest changes..."
 git pull origin master
 
-# Install dependencies
-echo "Installing dependencies..."
+# Install dependencies for backend (inside the server directory)
+echo "Installing backend dependencies..."
+cd /home/ubuntu/fullstack-app/server
+npm install --production
+
+# Install dependencies for frontend (inside the client directory)
+echo "Installing frontend dependencies..."
+cd /home/ubuntu/fullstack-app/client
 npm install --production
 
 # Build the React frontend
 echo "Building React frontend..."
-cd client && npm run build && cd ..
+npm run build
+cd ..
 
 # Restart the backend server (e.g., Node.js app using pm2)
 echo "Restarting backend server..."
-pm2 restart app_name || pm2 start app.js --name "app_name"
+cd /home/ubuntu/fullstack-app/server
+pm2 stop app_name || pm2 start app.js --name "app_name"
 
-# Or, if you're using Docker, restart the containers
+# If using Docker instead of pm2, restart the containers (optional)
+# echo "Restarting Docker containers..."
+# cd /home/ubuntu/fullstack-app
 # docker-compose down && docker-compose up -d
 
 echo "Deployment completed successfully!"
