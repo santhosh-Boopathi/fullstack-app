@@ -24,7 +24,7 @@ jobs:
 
     - name: List files in EC2 directory (for debugging)
       run: |
-        ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "ls -la ${EC2_PATH}/fullstack-app"
+        ssh -i key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "ls -la ${EC2_PATH}"
 
     - name: SSH into EC2 and deploy
       run: |
